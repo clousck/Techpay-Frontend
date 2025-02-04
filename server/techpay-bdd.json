@@ -1,0 +1,164 @@
+{
+  "tarjetas": [
+    {
+      "tarjeta_id": 1,
+      "tarjeta_numero": "4111111",
+      "tarjeta_titular": "Juan Pérez",
+      "tarjeta_cvv": "123",
+      "tarjeta_saldo": 5000.00,
+      "tarjeta_expiracion": "2025-12-31",
+      "tarjeta_banco": "Banco Nacional",
+      "tarjeta_tipo": "Crédito",
+      "tarjeta_estado": false
+    },
+    {
+      "tarjeta_id": 2,
+      "tarjeta_numero": "4222222222222222",
+      "tarjeta_titular": "María García",
+      "tarjeta_cvv": "456",
+      "tarjeta_saldo": 3000.00,
+      "tarjeta_expiracion": "2024-11-30",
+      "tarjeta_banco": "Banco Internacional",
+      "tarjeta_tipo": "Débito",
+      "tarjeta_estado": true
+    },
+    {
+      "tarjeta_id": 3,
+      "tarjeta_numero": "4333333333333333",
+      "tarjeta_titular": "Carlos López",
+      "tarjeta_cvv": "789",
+      "tarjeta_saldo": 10000.00,
+      "tarjeta_expiracion": "2026-10-31",
+      "tarjeta_banco": "Banco Regional",
+      "tarjeta_tipo": "Crédito",
+      "tarjeta_estado": false
+    },
+    {
+      "tarjeta_id": 4,
+      "tarjeta_numero": "43654563456241",
+      "tarjeta_titular": "Brayan de la Torre",
+      "tarjeta_cvv": "879",
+      "tarjeta_saldo": 300.00,
+      "tarjeta_expiracion": "2025-12-31",
+      "tarjeta_banco": "Banco Pichincha",
+      "tarjeta_tipo": "Crédito",
+      "tarjeta_estado": true
+    },
+    {
+      "tarjeta_id": 5,
+      "tarjeta_numero": "44444444444444",
+      "tarjeta_titular": "Dilagod",
+      "tarjeta_cvv": "444",
+      "tarjeta_saldo": 10000000000.00,
+      "tarjeta_expiracion": "2026-01-31",
+      "tarjeta_banco": "Banco Pichincha",
+      "tarjeta_tipo": "Crédito",
+      "tarjeta_estado": true
+    }
+  ],
+  "clientes": [
+    {
+      "cliente_id": 1,
+      "cliente_nombre": "MiniMarketDemo"
+    },
+    {
+      "cliente_id": 2,
+      "cliente_nombre": "Starlink"
+    },
+    {
+      "cliente_id": 3,
+      "cliente_nombre": "Tech Solutions"
+    }
+  ],
+  "apikeys": [
+    {
+      "apikey_id": 1,
+      "apikey_key": "8ad9ec12d728a10ef6ae-techpay.ec",
+      "apikey_descripcion": "API Key 1 para acceso a datos",
+      "cliente_id": 1,
+      "apikey_estado": true
+    },
+    {
+      "apikey_id": 2,
+      "apikey_key": "4b756b6a6e70659f27be-techpay.ec",
+      "apikey_descripcion": "API Key 2 para acceso a datos",
+      "cliente_id": 1,
+      "apikey_estado": true
+    },
+    {
+      "apikey_id": 3,
+      "apikey_key": "99336459808495451805-techpay.ec",
+      "apikey_descripcion": "API Key 3 para acceso a datos",
+      "cliente_id": 2,
+      "apikey_estado": true
+    },
+    {
+      "apikey_id": 4,
+      "apikey_key": "628b915b3f1ce2f6db01-techpay.ec",
+      "apikey_descripcion": "API Key 4 para acceso a datos",
+      "cliente_id": 3,
+      "apikey_estado": true
+    }
+  ],
+  "usuarios": [
+    {
+      "usuario_id": 1,
+      "usuario_nombre": "Admin",
+      "usuario_correo": "adminPP@technova.com",
+      "usuario_password": "T3chNov@2025",
+      "rol_id": 1
+    }
+  ],
+  "estados_transaccion": [
+    {
+      "estadotr_id": 1,
+      "estadotr_nombre": "Aprobada"
+    },
+    {
+      "estadotr_id": 2,
+      "estadotr_nombre": "Rechazada"
+    },
+    {
+      "estadotr_id": 3,
+      "estadotr_nombre": "Pendiente"
+    }
+  ],
+  "roles": [
+    {
+      "rol_id": 1,
+      "rol_nombre": "Administrador"
+    }
+  ],
+  "transacciones": [
+    {
+      "transaccion_id": 1,
+      "transaccion_monto": 10000.01,
+      "estadotr_id": 2,
+      "transaccion_fecha": "2025-01-31",
+      "transaccion_moneda": "USD",
+      "transaccion_descripcion": "Pago de servicios",
+      "cliente_id": 1,
+      "tarjeta_id": 3
+    },
+    {
+      "transaccion_id": 2,
+      "transaccion_monto": 450,
+      "estadotr_id": 1,
+      "transaccion_fecha": "2023-10-15",
+      "transaccion_moneda": "USD",
+      "transaccion_descripcion": "Compra en línea - Tienda XYZ",
+      "cliente_id": 1,
+      "tarjeta_id": 1
+    },
+    {
+      "transaccion_id": 3,
+      "transaccion_monto": 1000,
+      "estadotr_id": 3,
+      "transaccion_fecha": "2025-02-01",
+      "transaccion_moneda": "USD",
+      "transaccion_descripcion": "Pago de servicios pendientes",
+      "cliente_id": 2,
+      "tarjeta_id": 4
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <form [formGroup]="transactionForm" (ngSubmit)="createTransaction()">
+            <div class="form-group">
+                <label>API Key</label>
+                <input class="form-control" type="text" formControlName="apiKey" required />
+            </div>
+            <div class="form-group">
+                <label>Número de Tarjeta</label>
+                <input class="form-control" type="text" formControlName="tarjetaNumero" required />
+            </div>
+            <div class="form-group">
+                <label>CVV</label>
+                <input class="form-control" type="text" formControlName="tarjetaCvv" required />
+            </div>
+            <div class="form-group">
+                <label>Titular de la Tarjeta</label>
+                <input class="form-control" type="text" formControlName="tarjetaTitular" required />
+            </div>
+            <div class="form-group">
+                <label>Fecha de Expiración</label>
+                <input class="form-control" type="text" formControlName="tarjetaFecha" required />
+            </div>
+            <div class="form-group">
+                <label>Monto</label>
+                <input class="form-control" type="number" formControlName="monto" required />
+            </div>
+            <div class="form-group">
+                <label>Moneda</label>
+                <input class="form-control" type="text" formControlName="moneda" required />
+            </div>
+            <div class="form-group">
+                <label>Descripción</label>
+                <input class="form-control" type="text" formControlName="descripcion" required />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" type="submit">
+                    Crear transacción
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

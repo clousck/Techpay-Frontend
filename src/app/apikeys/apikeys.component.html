@@ -1,0 +1,51 @@
+<div class="container custom-container-2">
+    <table>
+        <tr *ngFor="let apikey of apikeys">
+            <td>{{ apikey | json }}</td>
+        </tr>
+    </table>
+    <!-- Se muestra cuando no existen empleados -->
+    <div class="no-data text-center">
+        <button class="btn btn-outline-primary" routerLink="/">Crear apikey</button>
+    </div>
+    <br>
+    <!-- Tabla de empleados, se oculta cuando no existen registros -->
+    <div *ngIf="apikeys.length !== 0">
+        <h3 class="mb-3 text-center">Lista de apikeys</h3>
+        <div class="col-md-12">
+            <!-- <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Moneda</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let apikey of apikeys">
+                        <td>{{ apikey.transaccionId }}</td>
+                        <td>{{ apikey.transaccionMonto }}</td>
+                        <td>{{ apikey.transaccionFecha }}</td>
+                        <td>{{ apikey.transaccionMoneda }}</td>
+                        <td>{{ apikey.transaccionDescripcion }}</td>
+                        <td>{{ apikey.cliente.clienteNombre }}</td>
+                        <td>
+                            <ng-container [ngSwitch]="+apikey.estadotransaccion.estadotrId">
+                                <span *ngSwitchCase="1" class="text-danger fs-6">API KEY inválida</span>
+                                <span *ngSwitchCase="2" class="text-danger fs-6">Datos incorrectos</span>
+                                <span *ngSwitchCase="3" class="text-danger fs-6">Rechazada</span>
+                                <span *ngSwitchCase="4" class="text-success fs-6">Aprobada</span>
+                                <button *ngSwitchCase="5" class="btn btn-warning" (click)="aproveTransaction(transaction.transaccionId)">Pendiente</button>
+                                <span *ngSwitchDefault class="bg-light text-dark fs-6">Estado desconocido</span>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> -->
+        </div>
+    </div>
+</div>
