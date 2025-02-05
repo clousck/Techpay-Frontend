@@ -1,9 +1,8 @@
 <div class="container-fluid vh-100 overflow-auto">
   <!-- Jumbotron con título -->
-  <div class="jumbotron text-center mb-4">
-    <h1 class="display-4 text-primary">{{title}}</h1>
-  </div>
-
+  <div class="jumbotron text-center mb-1 p-2 bg-light border rounded shadow-lg">
+    <h1 class="display-3 fw-bold text-primary text-uppercase">{{ title }}</h1>
+</div>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm rounded">
     <div class="container">
@@ -12,7 +11,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div *ngIf="authenticated" class="collapse navbar-collapse" id="navbarNav">
         <!-- Lista de enlaces principales -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">

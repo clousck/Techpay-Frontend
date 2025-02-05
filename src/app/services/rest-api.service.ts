@@ -142,7 +142,7 @@ export class RestApiService {
       'Content-Type': 'application/json'
     });
 
-    const body = { apikey_estado: !status };
+    const body = { apikey_estado: status };
 
     return this.http.put<Apikey>(this.apiURL + '/apikeys/' + id, body, { headers })
       .pipe(

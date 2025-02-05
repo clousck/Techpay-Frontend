@@ -4,7 +4,7 @@
     <div *ngIf="transactions.length !== 0">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Lista de transacciones</h1>
-            <button class="btn btn-primary" routerLink="/transactions-create">Crear transacción</button>
+            <!-- <button class="btn btn-primary" routerLink="/transactions-create">Crear transacción</button> -->
         </div>
         <div class="col-md-12">
             <table class="table table-bordered">
@@ -27,27 +27,15 @@
                         <td class="text-center">{{ transaction.transaccionMoneda }}</td>
                         <td>{{ transaction.transaccionDescripcion }}</td>
                         <td>{{ transaction.cliente.clienteNombre }}</td>
-                        <td>
+                        <td class="text-center">
                             <ng-container [ngSwitch]="+transaction.estadotransaccion.estadotrId">
-                                <span *ngSwitchCase="1" class="text-danger fs-5">
-                                    <i class="bi bi-x-circle-fill"></i> API KEY inválida
-                                </span>
-                                <span *ngSwitchCase="2" class="text-danger fs-5">
-                                    <i class="bi bi-exclamation-triangle-fill"></i> Datos incorrectos
-                                </span>
-                                <span *ngSwitchCase="3" class="text-danger fs-5">
-                                    <i class="bi bi-x-octagon-fill"></i> Rechazada
-                                </span>
-                                <span *ngSwitchCase="4" class="text-success fs-5">
-                                    <i class="bi bi-check-circle-fill"></i> Aprobada
-                                </span>
-                                <span *ngSwitchCase="5" class="text-warning-dark fs-5">
-                                    <i class="bi bi-hourglass-split"></i> Pendiente
-                                </span>
-                                <span *ngSwitchDefault class="text-dark fs-5">
-                                    <i class="bi bi-question-circle-fill"></i> Estado desconocido
-                                </span>
-                            </ng-container>                            
+                                <i *ngSwitchCase="1" class="bi bi-x-circle-fill text-danger fs-4" title="API KEY inválida"></i>
+                                <i *ngSwitchCase="2" class="bi bi-exclamation-triangle-fill text-danger fs-4" title="Datos incorrectos"></i>
+                                <i *ngSwitchCase="3" class="bi bi-x-octagon-fill text-danger fs-4" title="Rechazada"></i>
+                                <i *ngSwitchCase="4" class="bi bi-check-circle-fill text-success fs-4" title="Aprobada"></i>
+                                <i *ngSwitchCase="5" class="bi bi-hourglass-split text-warning-dark fs-4" title="Pendiente"></i>
+                                <i *ngSwitchDefault class="bi bi-question-circle-fill text-dark fs-4" title="Estado desconocido"></i>
+                            </ng-container>
                         </td>
                     </tr>
                 </tbody>

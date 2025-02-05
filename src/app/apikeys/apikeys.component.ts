@@ -25,8 +25,12 @@ export class ApikeysComponent implements OnInit {
   }
 
   toggleApikeyStatus(id: number, status: boolean) {
-    this.restApi.toggleApikeyStatus(id, status).subscribe(data => {
-      this.getApikeys()
-    })
+    const updatedStatus = !status;
+    this.restApi.toggleApikeyStatus(id, updatedStatus).subscribe(() => {
+      const apikey = this.apikeys.find((key: any) => key.apikeyId === id);
+      if (apikey) {
+        apikey.apikeyEstado = updatedStatus;
+      }
+    });
   }
 }

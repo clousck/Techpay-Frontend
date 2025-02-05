@@ -16,6 +16,8 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Nombre</th>
+                        <th scope="col">Apikeys</th>
+                        <th scope="col">Transacciones</th>
                         <th scope="col">Ver</th>
                     </tr>
                 </thead>
@@ -42,12 +44,13 @@
                                 <i class="bi bi-check"></i>
                             </button>
                         </td>
-
+                        <td class="text-center">{{ client.apikeys.length }}</td>
+                        <td class="text-center">{{ client.transacciones.length }}</td>
                         <td class="text-center">
                             <button class="btn btn-primary me-2"
-                                (click)="getApikeysByClient(client.clienteId)">Apikeys</button>
+                                (click)="getApikeysByClient(client)">Apikeys</button>
                             <button class="btn btn-info text-white"
-                                (click)="getTransactionsByClient(client.clienteId)">Transacciones</button>
+                                (click)="getTransactionsByClient(client)">Transacciones</button>
                         </td>
                     </tr>
                 </tbody>

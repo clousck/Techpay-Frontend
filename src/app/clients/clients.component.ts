@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RestApiService } from '../services/rest-api.service';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Client } from '../model/client';
 @Component({
   selector: 'app-consulta',
   standalone: true,
@@ -18,7 +19,8 @@ export class ClientsComponent implements OnInit {
 
   editingClient: any = false;
 
-  selectedClient: number = NaN;
+  selectedClient: Client | undefined;
+
   constructor(
     public restApi: RestApiService
   ) { }
@@ -49,26 +51,37 @@ export class ClientsComponent implements OnInit {
     });
   }
 
-  getApikeysByClient(id: number) {
-    this.apikeys = this.clients[id - 1].apikeys;
+  getApikeysByClient(client: any) {
     this.showTransactions = false;
     this.showApikeys = true;
-    this.selectedClient = id;
+    
+    if (client.apikeys.length == 0) {
+      window.alert("El cliente no tiene apikeys.");
+    }
+
+    this.apikeys = client.apikeys;
+    this.selectedClient = client;
+  }
+
+  getTransactionsByClient(client: any) {
+    this.showApikeys = false;
+    this.showTransactions = true;
+    
+    if (client.transacciones.length == 0) {
+      window.alert("El cliente no tiene transacciones.");
+    }
+
+    this.transactions = client.transacciones;
+    this.selectedClient = client;
   }
 
   toggleApikeyStatus(id: number, status: boolean) {
-    this.restApi.toggleApikeyStatus(id, status).subscribe(() => {
-      this.getClients(); // Espera a que los clientes se actualicen
-      setTimeout(() => {
-        this.getApikeysByClient(this.selectedClient); // Llama después de actualizar los clientes
-      }, 100); // Espera un corto tiempo para evitar que la data no esté lista
+    const updatedStatus = !status;
+    this.restApi.toggleApikeyStatus(id, updatedStatus).subscribe(() => {
+      const apikey = this.apikeys.find((key: any) => key.apikeyId === id);
+      if (apikey) {
+        apikey.apikeyEstado = updatedStatus;
+      }
     });
-  }
-
-  getTransactionsByClient(id: number) {
-    this.transactions = this.clients[id - 1].transacciones;
-    this.showApikeys = false;
-    this.showTransactions = true;
-    this.selectedClient = id;
   }
 }
