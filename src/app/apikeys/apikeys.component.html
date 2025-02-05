@@ -9,7 +9,7 @@
     <div *ngIf="apikeys.length !== 0">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Lista de Apikeys</h1>
-            <button class="btn btn-primary" routerLink="/">Crear apikey</button>
+            <button class="btn btn-primary" routerLink="/apikeys-create">Crear apikey</button>
         </div>
         <div class="col-md-12">
             <table class="table table-bordered">
@@ -24,16 +24,16 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let apikey of apikeys">
-                        <td>{{ apikey.apikeyId }}</td>
+                        <td class="text-center">{{ apikey.apikeyId }}</td>
                         <td>{{ apikey.apikeyKey }}</td>
                         <td>{{ apikey.apikeyDescripcion }}</td>
-                        <td>{{ apikey.clienteId }}</td>
+                        <td class="text-center">{{ apikey.clienteId }}</td>
                         <td *ngIf="apikey.apikeyEstado; else inactiveTemplate" class="text-center">
-                            <button class="btn btn-success fs-6">Activa</button>
+                            <button class="btn btn-success fs-6" (click)="toggleApikeyStatus(apikey.apikeyId, apikey.apikeyEstado)">Activa</button>
                         </td>
                         <ng-template #inactiveTemplate>
                             <td class="text-center">
-                                <button class="btn btn-danger fs-6">Inactiva</button>
+                                <button class="btn btn-danger fs-6" (click)="toggleApikeyStatus(apikey.apikeyId, apikey.apikeyEstado)">Inactiva</button>
                             </td>
                         </ng-template>
                     </tr>

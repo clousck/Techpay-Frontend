@@ -15,6 +15,9 @@ export class AppComponent {
   constructor(private router: Router, private auth: AuthService) {}
 
   ngOnInit() {
+    setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }, 500);
     this.authenticated = this.auth.isAuthenticated();
   }
 

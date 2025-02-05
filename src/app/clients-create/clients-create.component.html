@@ -1,0 +1,16 @@
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <form [formGroup]="clientForm" (ngSubmit)="createClient()">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input class="form-control" type="text" formControlName="clienteNombre" required />
+            </div>
+            <br>
+            <div class="form-group text-center">
+                <button class="btn btn-primary btn-block" type="submit">
+                    Crear Cliente
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

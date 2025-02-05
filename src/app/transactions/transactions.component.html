@@ -4,7 +4,7 @@
     <div *ngIf="transactions.length !== 0">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Lista de transacciones</h1>
-            <button class="btn btn-primary" routerLink="/transactionscreate">Crear transacción</button>
+            <button class="btn btn-primary" routerLink="/transactions-create">Crear transacción</button>
         </div>
         <div class="col-md-12">
             <table class="table table-bordered">
@@ -21,10 +21,10 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let transaction of transactions">
-                        <td>{{ transaction.transaccionId }}</td>
+                        <td class="text-center">{{ transaction.transaccionId }}</td>
                         <td>${{ transaction.transaccionMonto }}</td>
                         <td>{{ transaction.transaccionFecha }}</td>
-                        <td>{{ transaction.transaccionMoneda }}</td>
+                        <td class="text-center">{{ transaction.transaccionMoneda }}</td>
                         <td>{{ transaction.transaccionDescripcion }}</td>
                         <td>{{ transaction.cliente.clienteNombre }}</td>
                         <td>

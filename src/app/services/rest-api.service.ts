@@ -78,6 +78,21 @@ export class RestApiService {
       );
   }
 
+  createApikey(apikey: any): Observable<Apikey> {
+    const headers = new HttpHeaders({
+      'pp-token': `${this.auth.getToken()}`,
+      'Content-Type': 'application/json'
+    });
+
+    const body = { apikey_descripcion: apikey.apikeyDescripcion, cliente_id: apikey.clienteId }
+
+    return this.http.post<Apikey>(this.apiURL + '/apikeys', body, { headers })
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      )
+  }
+
   getClients(): Observable<Client> {
     const headers = new HttpHeaders({
       'pp-token': `${this.auth.getToken()}`,
@@ -91,15 +106,48 @@ export class RestApiService {
       );
   }
 
-  login(correo: string, password: string): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = { correo, password };
+  createClient(client: any): Observable<Client> {
+    const headers = new HttpHeaders({
+      'pp-token': `${this.auth.getToken()}`,
+      'Content-Type': 'application/json'
+    });
 
-    return this.http.post<any>(this.apiURL + "/auth/login", body, { headers }).pipe(
-      catchError((error) => {
-        console.error('Error en el login:', error);
-        return throwError(() => new Error('Error en el login'));
-      })
-    );
+    const body = { clienteNombre: client.clienteNombre };
+
+    return this.http.post<Client>(this.apiURL + '/clientes', body, { headers })
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      )
+  }
+
+  updateClient(id: number, name: string): Observable<Client> {
+    const headers = new HttpHeaders({
+      'pp-token': `${this.auth.getToken()}`,
+      'Content-Type': 'application/json'
+    });
+
+    const body = { clienteNombre: name };
+
+    return this.http.put<Client>(this.apiURL + '/clientes/' + id, body, { headers })
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      )
+  }
+
+  toggleApikeyStatus(id: any, status: boolean) {
+    const headers = new HttpHeaders({
+      'pp-token': `${this.auth.getToken()}`,
+      'Content-Type': 'application/json'
+    });
+
+    const body = { apikey_estado: !status };
+
+    return this.http.put<Apikey>(this.apiURL + '/apikeys/' + id, body, { headers })
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
   }
 }

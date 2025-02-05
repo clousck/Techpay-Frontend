@@ -6,4 +6,5 @@ export interface Client {
     clienteNombre: string;
     apikeys: Apikey[];
     transacciones: Transaction[];
+    isEditing: boolean;
 }

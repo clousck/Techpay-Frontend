@@ -23,4 +23,10 @@ export class ApikeysComponent implements OnInit {
       this.apikeys = data;
     })
   }
+
+  toggleApikeyStatus(id: number, status: boolean) {
+    this.restApi.toggleApikeyStatus(id, status).subscribe(data => {
+      this.getApikeys()
+    })
+  }
 }

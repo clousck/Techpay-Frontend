@@ -8,7 +8,7 @@
     <div *ngIf="clients.length !== 0">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Lista de clientes</h1>
-            <button class="btn btn-primary" routerLink="/">Crear cliente</button>
+            <button class="btn btn-primary" routerLink="/clients-create">Crear cliente</button>
         </div>
         <div class="col-md-12">
             <table class="table table-bordered">
@@ -17,20 +17,91 @@
                         <th scope="col">ID</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Ver</th>
-                        <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let client of clients">
-                        <td>{{ client.clienteId }}</td>
-                        <td>{{ client.clienteNombre }}</td>
-                        <td class="text-center">
-                            <button class="btn btn-primary me-2">Apikeys</button>
-                            <button class="btn btn-info text-white">Transacciones</button>
-                          </td>
-                        <td class="text-center">
-                            <button class="btn btn-warning">Editar</button>
+                        <td class="text-center">{{ client.clienteId }}</td>
+                        <td class="d-flex justify-content-between align-items-center">
+                            <!-- Mostrar el nombre solo si no está en edición -->
+                            <span *ngIf="!client.isEditing">{{ client.clienteNombre }}</span>
+
+                            <!-- Input solo visible cuando está en edición -->
+                            <input *ngIf="client.isEditing" type="text" class="form-control form-control-sm"
+                                [value]="client.clienteNombre" (input)="onInputChange($event, client)">
+
+                            <!-- Botón de Editar -->
+                            <button *ngIf="!client.isEditing" class="btn btn-warning btn-sm ms-2"
+                                (click)="editClient(client)">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+
+                            <!-- Botón de Guardar -->
+                            <button *ngIf="client.isEditing" class="btn btn-success btn-sm ms-2"
+                                (click)="saveClient(client)">
+                                <i class="bi bi-check"></i>
+                            </button>
                         </td>
+
+                        <td class="text-center">
+                            <button class="btn btn-primary me-2"
+                                (click)="getApikeysByClient(client.clienteId)">Apikeys</button>
+                            <button class="btn btn-info text-white"
+                                (click)="getTransactionsByClient(client.clienteId)">Transacciones</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="showApikeys && apikeys.length !== 0" class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Key</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let apikey of apikeys">
+                        <td class="text-center">{{ apikey.apikeyId }}</td>
+                        <td>{{ apikey.apikeyKey }}</td>
+                        <td>{{ apikey.apikeyDescripcion }}</td>
+                        <td class="text-center">{{ apikey.clienteId }}</td>
+                        <td *ngIf="apikey.apikeyEstado; else inactiveTemplate" class="text-center">
+                            <button class="btn btn-success fs-6"
+                                (click)="toggleApikeyStatus(apikey.apikeyId, apikey.apikeyEstado)">Activa</button>
+                        </td>
+                        <ng-template #inactiveTemplate>
+                            <td class="text-center">
+                                <button class="btn btn-danger fs-6"
+                                    (click)="toggleApikeyStatus(apikey.apikeyId, apikey.apikeyEstado)">Inactiva</button>
+                            </td>
+                        </ng-template>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="showTransactions && transactions.length !== 0" class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Moneda</th>
+                        <th scope="col">Descripcion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let transaction of transactions">
+                        <td class="text-center">{{ transaction.transaccionId }}</td>
+                        <td>${{ transaction.transaccionMonto }}</td>
+                        <td>{{ transaction.transaccionFecha }}</td>
+                        <td class="text-center">{{ transaction.transaccionMoneda }}</td>
+                        <td>{{ transaction.transaccionDescripcion }}</td>
                     </tr>
                 </tbody>
             </table>
