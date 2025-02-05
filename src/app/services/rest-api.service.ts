@@ -5,13 +5,14 @@ import { Transaction } from '../model/transaction';
 import { TransactionCreate } from '../model/transaction-create';
 import { Apikey } from '../model/apikey';
 import { Client } from '../model/client';
+import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
 export class RestApiService {
   // Definir API
   apiURL = 'https://localhost:3000/api';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
   //Http options:
   httpOptions = {
     headers: new HttpHeaders({
@@ -65,18 +66,40 @@ export class RestApiService {
   }
 
   getApikeys(): Observable<Apikey> {
-    return this.http.get<Apikey>(this.apiURL + '/apikeys')
+    const headers = new HttpHeaders({
+      'pp-token': `${this.auth.getToken()}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get<Apikey>(`${this.apiURL}/apikeys`, { headers })
       .pipe(
         retry(1),
         catchError(this.handleError)
-      )
+      );
   }
 
   getClients(): Observable<Client> {
-    return this.http.get<Client>(this.apiURL + '/clientes')
+    const headers = new HttpHeaders({
+      'pp-token': `${this.auth.getToken()}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get<Client>(`${this.apiURL}/clientes`, { headers })
       .pipe(
         retry(1),
         catchError(this.handleError)
-      )
+      );
+  }
+
+  login(correo: string, password: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = { correo, password };
+
+    return this.http.post<any>(this.apiURL + "/auth/login", body, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error en el login:', error);
+        return throwError(() => new Error('Error en el login'));
+      })
+    );
   }
 }

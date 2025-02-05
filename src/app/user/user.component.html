@@ -1,0 +1,14 @@
+<div *ngIf="authenticated">
+    <!-- Contenido visible solo cuando el usuario está autenticado -->
+    <button class="btn btn-danger" routerLink="/login" (click)="logout()">
+      Logout
+    </button>
+  </div>
+  
+  <div *ngIf="!authenticated">
+    <!-- Contenido visible solo cuando el usuario no está autenticado -->
+    <button class="btn btn-primary" routerLink="/login">
+      Login
+    </button>
+  </div>
+  

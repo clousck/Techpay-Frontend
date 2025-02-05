@@ -1,51 +1,39 @@
 <div class="container custom-container-2">
-    <table>
+    <!-- <table>
         <tr *ngFor="let client of clients">
             <td>{{ client | json }}</td>
         </tr>
-    </table>
-    <!-- Se muestra cuando no existen empleados -->
-    <div class="no-data text-center">
-        <button class="btn btn-outline-primary" routerLink="/">Crear cliente</button>
-    </div>
+    </table> -->
     <br>
-    <!-- Tabla de empleados, se oculta cuando no existen registros -->
     <div *ngIf="clients.length !== 0">
-        <h3 class="mb-3 text-center">Lista de clientes</h3>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Lista de clientes</h1>
+            <button class="btn btn-primary" routerLink="/">Crear cliente</button>
+        </div>
         <div class="col-md-12">
-            <!-- <table class="table table-bordered">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Moneda</th>
-                        <th scope="col">Descripcion</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Ver</th>
+                        <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let apikey of apikeys">
-                        <td>{{ apikey.transaccionId }}</td>
-                        <td>{{ apikey.transaccionMonto }}</td>
-                        <td>{{ apikey.transaccionFecha }}</td>
-                        <td>{{ apikey.transaccionMoneda }}</td>
-                        <td>{{ apikey.transaccionDescripcion }}</td>
-                        <td>{{ apikey.cliente.clienteNombre }}</td>
-                        <td>
-                            <ng-container [ngSwitch]="+apikey.estadotransaccion.estadotrId">
-                                <span *ngSwitchCase="1" class="text-danger fs-6">API KEY inválida</span>
-                                <span *ngSwitchCase="2" class="text-danger fs-6">Datos incorrectos</span>
-                                <span *ngSwitchCase="3" class="text-danger fs-6">Rechazada</span>
-                                <span *ngSwitchCase="4" class="text-success fs-6">Aprobada</span>
-                                <button *ngSwitchCase="5" class="btn btn-warning" (click)="aproveTransaction(transaction.transaccionId)">Pendiente</button>
-                                <span *ngSwitchDefault class="bg-light text-dark fs-6">Estado desconocido</span>
-                            </ng-container>
+                    <tr *ngFor="let client of clients">
+                        <td>{{ client.clienteId }}</td>
+                        <td>{{ client.clienteNombre }}</td>
+                        <td class="text-center">
+                            <button class="btn btn-primary me-2">Apikeys</button>
+                            <button class="btn btn-info text-white">Transacciones</button>
+                          </td>
+                        <td class="text-center">
+                            <button class="btn btn-warning">Editar</button>
                         </td>
                     </tr>
                 </tbody>
-            </table> -->
+            </table>
         </div>
     </div>
 </div>
