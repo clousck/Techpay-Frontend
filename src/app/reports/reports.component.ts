@@ -6,24 +6,45 @@ import { Transaction } from '../model/transaction';
 import { jsPDF } from 'jspdf';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import html2canvas from 'html2canvas';
+import { Apikey } from '../model/apikey';
+import { Client } from '../model/client';
 
 Chart.register(...registerables)
 
 @Component({
   selector: 'app-reports',
-  imports: [NgFor, CommonModule, NgxChartsModule],
+  imports: [CommonModule, NgxChartsModule],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css'
 })
 export class ReportsComponent {
   chartData: Transaction[] = []
+  apikeys: Apikey[] = []
+  clients: Client[] = []
   labelData: any[] = [];
   realData: any[] = [];
   transactionCountData: number[] = [];
+  pieChartData: any[] = [];
   constructor(private restApi: RestApiService) { }
 
   ngOnInit(): void {
-    this.getChartData();
+    this.getBarChartData();
+    this.getPieChartData();
+
+    this.getApikeys();
+    this.getClients();
+  }
+
+  getClients() {
+    return this.restApi.getClients().subscribe(data => {
+      this.clients = data;
+    })
+  }
+
+  getApikeys() {
+    return this.restApi.getApikeys().subscribe(data => {
+      this.apikeys = data;
+    })
   }
 
   getMonthYear(fecha: string): string {
@@ -31,7 +52,42 @@ export class ReportsComponent {
     return `${date.getMonth() + 1}/${date.getFullYear()}`;
   }
 
-  getChartData() {
+  getPieChartData() {
+    return this.restApi.getTransactions().subscribe(data => {
+      this.chartData = data;
+
+      // Mapeo de IDs a nombres de estados
+      const estadoMap: { [key: number]: string } = {
+        1: "Inválida",
+        2: "Datos incorrectos",
+        3: "Rechazada",
+        4: "Aprobada",
+        5: "Pendiente"
+      };
+
+      // Agrupar las transacciones por estado
+      const estadoCounts: { [key: number]: number } = {};
+
+      this.chartData.forEach(o => {
+        if (!estadoCounts[o.estadotransaccion.estadotrId]) {
+          estadoCounts[o.estadotransaccion.estadotrId] = 0;
+        }
+        estadoCounts[o.estadotransaccion.estadotrId] += 1;
+      });
+
+      console.log("Transacciones por estado:", estadoCounts);
+
+      // Convertir los datos al formato requerido por ngx-charts con nombres descriptivos
+      this.pieChartData = Object.keys(estadoCounts).map(key => ({
+        name: estadoMap[Number(key)] || `Estado ${key}`, // Si no hay un nombre, se usa "Estado X"
+        value: estadoCounts[Number(key)]
+      }));
+
+      console.log("Datos para gráfico de pie:", this.pieChartData);
+    });
+  }
+
+  getBarChartData() {
     return this.restApi.getTransactions().subscribe(data => {
       this.chartData = data;
 
@@ -109,7 +165,7 @@ export class ReportsComponent {
     });
   }
 
-  exportToCSV() {
+  exportTransactionsToCSV() {
     const headers = ["ID", "Monto", "Fecha", "Moneda", "Descripción", "Estado", "Cliente"];
     const csvRows = this.chartData.map(transaction => [
       transaction.transaccionId,
@@ -136,14 +192,88 @@ export class ReportsComponent {
     document.body.removeChild(a);
   }
 
-  exportToPDF() {
+  exportApikeysToCSV() {
+    const headers = ["ID", "Descripción", "Estado", "Cliente"];
+    const csvRows = this.apikeys.map(apikey => [
+      apikey.apikeyId,
+      apikey.apikeyDescripcion,
+      apikey.apikeyEstado ? 'Activo' : 'Inactivo', // Asumiendo que 'apikeyEstado' es un booleano
+      apikey.clienteId
+    ]);
+
+
+    const csvContent = [
+      headers.join(","),
+      ...csvRows.map(row => row.join(","))
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'apikeys.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  exportClientsToCSV() {
+    const headers = ["ID", "Descripción", "Estado", "Cliente"];
+    const csvRows = this.clients.map(client => [
+      client.clienteId,
+      client.transacciones.map(transaction => String(transaction.transaccionDescripcion)).join(', '), // Asegurarse de convertir a string
+      client.isEditing ? 'Editando' : 'No editando',
+      client.clienteNombre
+    ]);
+
+    // Si se necesita que las filas sean un solo array:
+    const csvData = csvRows.flat(); // Si tienes varios clientes, aplanamos el arreglo.
+
+
+
+    const csvContent = [
+      headers.join(","),
+      ...csvRows.map(row => row.join(","))
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'clientes.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  exportBarChartToPDF() {
     const canvasElement = document.getElementById('barchart') as HTMLCanvasElement;
 
     html2canvas(canvasElement).then((canvas) => {
       const pdf = new jsPDF();
       const imgData = canvas.toDataURL('image/png');
       pdf.addImage(imgData, 'PNG', 10, 10, 180, 120); // Ajusta tamaño según lo necesites
-      pdf.save('grafico.pdf');
+      pdf.save('Transacciones-Bar.pdf');
     });
+  }
+
+  exportPieChartToPDF() {
+    const pieChartElement = document.getElementById('pieChartContainer');
+
+    if (pieChartElement) {
+      html2canvas(pieChartElement, { scale: 2 }).then((canvas) => {
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgData = canvas.toDataURL('image/png');
+
+        const imgWidth = 190; // Ajusta el ancho en mm
+        const pageHeight = pdf.internal.pageSize.height;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width; // Mantiene la proporción
+
+        let position = 10;
+        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+
+        pdf.save('Transacciones-Pie.pdf');
+      });
+    }
   }
 }

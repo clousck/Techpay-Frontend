@@ -51,3 +51,9 @@ th {
 .table td {
   border-bottom: 1px solid #ccc;
 }
+
+::ng-deep ngx-charts-legend {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center;
+}

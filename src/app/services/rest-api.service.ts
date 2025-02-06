@@ -51,13 +51,13 @@ export class RestApiService {
       )
   }
 
-  getApikeys(): Observable<Apikey> {
+  getApikeys(): Observable<Apikey[]> {
     const headers = new HttpHeaders({
       'pp-token': `${this.auth.getToken()}`,
       'Content-Type': 'application/json'
     });
 
-    return this.http.get<Apikey>(`${this.apiURL}/apikeys`, { headers })
+    return this.http.get<Apikey[]>(`${this.apiURL}/apikeys`, { headers })
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -79,13 +79,13 @@ export class RestApiService {
       )
   }
 
-  getClients(): Observable<Client> {
+  getClients(): Observable<Client[]> {
     const headers = new HttpHeaders({
       'pp-token': `${this.auth.getToken()}`,
       'Content-Type': 'application/json'
     });
 
-    return this.http.get<Client>(`${this.apiURL}/clientes`, { headers })
+    return this.http.get<Client[]>(`${this.apiURL}/clientes`, { headers })
       .pipe(
         retry(1),
         catchError(this.handleError)
