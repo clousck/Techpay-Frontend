@@ -35,8 +35,8 @@ export class RestApiService {
     });
   }
   //Metodos CRUD para consumir el API RESTful
-  getTransactions(): Observable<Transaction> {
-    return this.http.get<Transaction>(this.apiURL + '/transacciones')
+  getTransactions(): Observable<Transaction[]> {
+    return this.http.get<Transaction[]>(this.apiURL + '/transacciones')
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -45,20 +45,6 @@ export class RestApiService {
 
   createTransaction(transaction: any): Observable<TransactionCreate> {
     return this.http.post<TransactionCreate>(this.apiURL + '/transacciones/procesar-pago', JSON.stringify(transaction), this.httpOptions)
-      .pipe(
-        retry(1),
-        catchError(this.handleError)
-      )
-  }
-
-  aproveTransaction(id: any) {
-    // return this.http.put<Transaction>(this.apiURL + '/transacciones/' + id, this.httpOptions)
-    //   .pipe(
-    //     retry(1),
-    //     catchError(this.handleError)
-    //   )
-    console.log("Aproving transaction " + id);
-    return this.http.get<Transaction>(this.apiURL + '/transacciones')
       .pipe(
         retry(1),
         catchError(this.handleError)

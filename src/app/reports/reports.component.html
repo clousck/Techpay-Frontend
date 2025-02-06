@@ -1,1 +1,35 @@
-<p>reports works!</p>
+<div class="p-4">
+    <!-- <table>
+        <h1>Transacciones</h1>
+        <tr *ngFor="let data of chartData">
+            <td>{{ data | json }}</td>
+        </tr>
+    </table> -->
+
+    <div class="d-flex">
+        <div class="col-lg-7 bg-white p-3 rounded shadow flex-grow-1">
+            <div class="d-flex justify-content">
+                <h2 class="flex-grow-1">Transacciones por mes</h2>
+                <button class="btn btn-success" (click)="exportToPDF()">Exportar a PDF</button>
+            </div>
+            <canvas id="barchart"></canvas>
+        </div>
+        <div class="col-lg-4 bg-white p-3 rounded shadow flex-grow-1">
+            <div class="d-flex justify-content">
+                <h2 class="flex-grow-1">Estados de transacciones</h2>
+                <button class="btn btn-success" (click)="exportToPDF()">Exportar a PDF</button>
+            </div>
+            <div class="col-lg-4">
+                <ngx-charts-bar-vertical [results]="chartData" [xAxis]="true" [yAxis]="true" [legend]="false"
+                    [showDataLabel]="true">
+                </ngx-charts-bar-vertical>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="d-flex col-lg-7 bg-white p-3 rounded shadow flex-grow-1 justify-content-around w-100">
+        <button class="btn btn-primary" (click)="exportToCSV()">Exportar transacciones CSV</button>
+        <button class="btn btn-primary" (click)="exportToCSV()">Exportar Apikeys CSV</button>
+        <button class="btn btn-primary" (click)="exportToCSV()">Exportar Clientes CSV</button>
+    </div>
+</div>

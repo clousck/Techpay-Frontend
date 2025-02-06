@@ -14,6 +14,8 @@ import { NgIf } from '@angular/common';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string = "";
+  user: string = "adminPP@technova.com";
+  password: string = "T3chNova@2025";
 
   constructor(
     private fb: FormBuilder,

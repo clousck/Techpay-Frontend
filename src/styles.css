@@ -1,41 +1,53 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow-y: auto; 
-    height: 100%;
-  }
-  
-  body {
-    background-image: url('assets/bg.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    overflow: hidden; /* Para evitar scroll accidental */
-  }
-  
-  body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(15px); /* Ajusta el nivel de desenfoque */
-    z-index: -1; /* Envía la capa al fondo */
-  }
-  
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  height: 100%;
+}
 
-  table {
-    border-collapse: separate; /* Necesario para que border-radius funcione */
-    border-spacing: 0; /* Elimina el espacio entre celdas */
-    border-radius: 10px; /* Ajusta según el redondeo que quieras */
-    overflow: hidden; /* Asegura que el borde se aplique correctamente */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); /* Opcional: agrega sombra para un efecto moderno */
-  }
-  
-  th {
-    background: linear-gradient(145deg, #879eb9, #acc8f1); /* Degradado de gris oscuro */
-  }
+body {
+  background-image: url('assets/bg.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(15px);
+  /* Ajusta el nivel de desenfoque */
+  background-color: rgba(92, 94, 182, 0.15);
+  /* Fondo oscuro con opacidad */
+  z-index: -1;
+}
+
+table {
+  border-collapse: separate;
+  /* Necesario para que border-radius funcione */
+  border-spacing: 0;
+  /* Elimina el espacio entre celdas */
+  border-radius: 10px;
+  /* Ajusta según el redondeo que quieras */
+  overflow: hidden;
+  /* Asegura que el borde se aplique correctamente */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+  /* Opcional: agrega sombra para un efecto moderno */
+}
+
+th {
+  background: linear-gradient(180deg, #8ba7c7, #acc8f1);
+}
+
+.table td {
+  border-bottom: 1px solid #ccc;
+}
